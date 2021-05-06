@@ -10,8 +10,8 @@ class Form extends Component {
   validateProperty = ({name, value}) => {
     const obj = {[name]: value};
     const schema = {[name]: this.schema[name]};
-    const {error} = Joi.validate(obj, schema);
-    return error ? error.detalis[0].message : null;
+    const {error} = Joi.validate(obj, schema, { abortEarly: false });
+    return error ? error.details[0].message : null;
   }
   
   validate = () => {
@@ -30,10 +30,12 @@ class Form extends Component {
   handleChange = ({currentTarget: input}) => {
     const errors = {...this.state.errors};
     const errorMessage = this.validateProperty(input);
-    if(errorMessage) error[input.name] = errorMessage;
+    if(errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
 
-    this.setState({errors});
+    const data = {...this.state.data};
+    data[input.name] = input.value;
+    this.setState({errors, data});
   }
 
   handleSubmit = e =>{
