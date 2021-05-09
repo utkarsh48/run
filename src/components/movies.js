@@ -6,6 +6,7 @@ import { getMovies } from "../services/fakeMovieService.js";
 import { getGenres } from "../services/fakeGenreService.js";
 import ListGroup from "./common/listGroup";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 export default class Movies extends Component {
 	state = {
@@ -82,6 +83,9 @@ export default class Movies extends Component {
 					onItemSelect={this.handleGenreSelect}/>
 				</div>
 				<div className="col">
+					<Link to="/movies/new" className="btn btn-primary" style={{marginBottom: 20}}>
+						New Movie
+					</Link>
 					<p>There are {totalCount} movies.</p>
 					<MoviesTable 
 						onDelete={this.handleDelete} 
